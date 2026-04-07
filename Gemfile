@@ -47,3 +47,4 @@ group :development, :test do
 end
 gem 'bcrypt'
 gem 'jwt'
+gem 'pundit'

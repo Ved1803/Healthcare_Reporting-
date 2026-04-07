@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  include Pundit
+
   before_action :authorize_request
 
   def authorize_request
@@ -10,5 +12,13 @@ class ApplicationController < ActionController::API
     @current_user = User.find(decoded[:user_id]) if decoded
   rescue
     render json: { error: "Unauthorized" }, status: :unauthorized
+  end
+
+  def current_user
+    @current_user
+  end
+
+  rescue_from Pundit::NotAuthorizedError do
+    render json: { error: "Not authorized" }, status: :forbidden
   end
 end

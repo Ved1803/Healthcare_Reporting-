@@ -6,7 +6,15 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :reports, only: [:index, :create]
+      resources :reports, only: [:index, :create] do
+        member do
+          patch :submit
+          patch :approve
+          patch :reject
+          patch :start_review
+        end
+        resources :comments, only: [:index, :create]
+      end
     end
   end
 end
